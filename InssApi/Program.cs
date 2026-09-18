@@ -20,7 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 // Igual ao M8 — DI das camadas
 builder.Services.AddScoped<IContribuinteRepository, ContribuinteRepository>();
@@ -31,7 +31,7 @@ builder.Services.AddScoped<IPedidoService, PedidoService>();
 // M13 — CORS: o browser trata 5173 e 5088 como sites diferentes.
 // Sem isso o portal recebe "blocked by CORS policy" no F12.
 builder.Services.AddCors(o => o.AddPolicy("portal", p =>
-    p.WithOrigins("http://localhost:5173")
+    p.WithOrigins("*")
      .AllowAnyHeader()
      .AllowAnyMethod()));
 
